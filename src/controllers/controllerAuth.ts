@@ -10,7 +10,7 @@ class controllerAuth {
     let { username, password } = req.body;  //Check if username and password are set                             
     if (!(username && password)) {res.status(400).send("Username or password are incorrect");}
     try {  //Get user from database
-    const userDB = await Pool.query(`select * from GetUserByName($1)`, [password.username]);
+    const userDB = await Pool.query(`select * from GetUserByName($1)`, [username]);
     const userData = userDB.rows[0];
     const newUser = new User(userData);
     //Check if encrypted password match
