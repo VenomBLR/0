@@ -21,7 +21,7 @@ static getOneById = async (req: Request, res: Response) => {
   const role = res.locals.jwtPayload.role;
   //Get the user from database
   try { 
-  if ((reqid == userid) || (role == "Manager")) {
+  if ((reqid == userid) || (role == "Admin") || (role == "Manager")) {
   const userDB = await Pool.query(`select * from GetById($1) as t1`,[reqid]); //We dont want to send the password on response
   const userData = userDB.rows[0];
   const newUser = new User(userData);
