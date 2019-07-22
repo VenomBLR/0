@@ -8,15 +8,14 @@ import JWT from "../services/JWT";
 class controllerAuth {
   static login = async (req: Request, res: Response) => {
     //Check if username and password are set
-    let payload = req.body;                               
-    if (!(payload.username && payload.password)) {res.status(400).send("Username or password are incorrect");}
-    //Get user from database
-    try {
-    const userDB = await Pool.query(`select * from GetUserByName($1)`, [payload.username]);
+    let { username, password } = req.body;                               
+    if (!(username && password)) {res.status(400).send("Username or password are incorrect");}
+    try {  //Get user from database
+    const userDB = await Pool.query(`select * from GetUserByName($1)`, [password.username]);
     const userData = userDB.rows[0];
     const newUser = new User(userData);
     //Check if encrypted password match
-    bcrypt.compare(payload.password, newUser.password).then(function(match) {
+    bcrypt.compare(password, newUser.password).then(function(match) {
     if(match) {
         const token = jwt.sign({ userid: newUser.userid, username: newUser.username, role: newUser.role }, JWT.jwtSecret, { expiresIn: "2h" } );
         res.setHeader('auth', token);
@@ -32,8 +31,7 @@ class controllerAuth {
     //Get parameters from the body
     const {oldPassword, newPassword} = req.body;
     if (!(oldPassword && newPassword)) {res.status(400).send("Passwords don't match!!!");}
-    //Get user from the database
-    try {
+    try { //Get user from the database
     const userDB = await Pool.query(`select * from GetUserByName($1)`,[username]);
     const userData = userDB.rows[0];
     const newUser = new User(userData);

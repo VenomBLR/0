@@ -6,12 +6,11 @@ import Pool from '../services/serviceDb';
 class controllerUsers{
 
 static listAll = async (req: Request, res: Response) => {
-  //Get users from database
-  try {
+try { //Get users from database
   const usersDB = await Pool.query(`select * from GetAll()`) //We dont want to send the passwords on response
   res.status(200).send(usersDB.rows);
-  } catch (error) {res.status(401).send(`Error!!! ${error}`);};     
-  };
+} catch (error) {res.status(401).send(`Error!!! ${error}`);};     
+};
 
 static getOneById = async (req: Request, res: Response) => {
   //Get the ID from the url
@@ -19,8 +18,7 @@ static getOneById = async (req: Request, res: Response) => {
   //Get ID and role from JWT
   const userid = res.locals.jwtPayload.userid;
   const role = res.locals.jwtPayload.role;
-  //Get the user from database
-  try { 
+  try { //Get the user from database
   if ((reqid == userid) || (role == "Admin") || (role == "Manager")) {
   const userDB = await Pool.query(`select * from GetById($1) as t1`,[reqid]); //We dont want to send the password on response
   const userData = userDB.rows[0];
@@ -34,8 +32,7 @@ static getOneById = async (req: Request, res: Response) => {
 };
 
 static newUser = async (req: Request, res: Response) => {
-  //Get parameters from the body
-  try{
+  try{ //Get parameters from the body
   let { username, password, firstname, lastname, email, roleid } = req.body;
   const newUser = new User(req.body);
   for (let key in newUser) { if (!(newUser[key])) {newUser[key] = null;}}
@@ -48,8 +45,7 @@ static newUser = async (req: Request, res: Response) => {
 };
 
 static editUser = async (req: Request, res: Response) => {
-  //Get values from the body
-  try{
+  try{ //Get values from the body
   let { userid, username, password, firstname, lastname, email, roleid } = req.body;
   if (!req.body.userid) {res.status(404).send("Userid not found!!!")};
   //Put request into updatedata 
