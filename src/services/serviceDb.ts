@@ -2,10 +2,10 @@ import { Pool } from 'pg';
 
 const pool = new Pool({
     database: 'postgres',
-    host: 'localhost',
-    password: 'postgres',
+    host: process.env.INVENTORY_URL || 'localhost',
+    password: process.env.INVENTORY_PASSWORD || 'postgres',
     port: 5432,
-    user: 'postgres',
+    user: process.env.INVENTORY_USER || 'postgres',
 });
 
 export function closePool() {
