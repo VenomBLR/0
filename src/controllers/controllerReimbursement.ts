@@ -6,10 +6,10 @@ import Pool from '../services/serviceDb';
 class controllerReimbursement{
 
     static byStatus = async (req: Request, res: Response) => {
+      try {
       //Get the Statusid from the url
       const reqid: number = req.params.statusid;
       //Get Reimbursements from database
-      try {
       const reimbursement = await Pool.query(`select * from GetAllReimbursementStatusId($1)`, [reqid]) 
       const reimbursementData = reimbursement.rows;
       if (!(reimbursementData.length == 0)) {
@@ -21,13 +21,13 @@ class controllerReimbursement{
     };
     
     static getOneById = async (req: Request, res: Response) => {
+      try {
       //Get the UserID from the url
       const reqid: number = req.params.id;
       //Get UserID from JWT
       const id = res.locals.jwtPayload.userid;
       //Get the user role from JWT
       const role = res.locals.jwtPayload.role;
-      try {
       if ((reqid == id) || (role == 'Manager')) {const reimbursement = await Pool.query(`select * from GetReimbursementById($1)`, [reqid]);
       if (reimbursement.rows[0]) {
       res.status(200).send(reimbursement.rows); 
@@ -41,9 +41,8 @@ class controllerReimbursement{
     };
     
     static submitReimbursement = async (req: Request, res: Response) => {
-      //Get parameters from the body
-      try{
-       let { reimbursementid, author, amount, datesubmitted, dateresolved, description, resolver, statusid, typeid } = req.body;
+       try{
+       let { reimbursementid, author, amount, datesubmitted, dateresolved, description, resolver, statusid, typeid } = req.body; //Get parameters from the body
        if (!(reimbursementid)) { 
        const newReimbursement = new Reimbursement(req.body);
        delete newReimbursement.reimbursementid;
@@ -56,9 +55,8 @@ class controllerReimbursement{
       };
    
     static editReimbursement = async (req: Request, res: Response) => {
-      //Get values from the body
       try{
-      let { reimbursementid, author, amount, datesubmitted, dateResolved, description, resolver, statusid, typeid } = req.body;
+      let { reimbursementid, author, amount, datesubmitted, dateResolved, description, resolver, statusid, typeid } = req.body;  //Get values from the body
       let updateReimbursement = new Reimbursement(req.body);
       //Try to find reimbursement on database
       const reimbursementDB = await Pool.query(`select * from GetReimbursement($1)`, [updateReimbursement.reimbursementid]);
