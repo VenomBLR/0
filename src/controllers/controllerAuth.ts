@@ -16,7 +16,7 @@ class controllerAuth {
     const userData = userDB.rows[0];
     const newUser = new User(userData);
     //Check if encrypted password match
-    bcrypt.compare(payload.username, newUser.password).then(function(match) {
+    bcrypt.compare(payload.password, newUser.password).then(function(match) {
     if(match) {
         const token = jwt.sign({userid: newUser.userid, username: payload.username, role: newUser.role }, JWT.jwtSecret, { expiresIn: "2h" } );
         res.setHeader('auth', token);
