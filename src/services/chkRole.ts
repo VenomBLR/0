@@ -1,6 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import User from "../models/user";
-import Pool from '../services/serviceDb';
 
 export const checkRole = (roles: Array<string>) => {
   return async (req: Request, res: Response, next: NextFunction) => {
