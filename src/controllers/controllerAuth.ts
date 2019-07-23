@@ -7,10 +7,12 @@ import JWT from "../services/JWT";
 
 class controllerAuth {
   static login = async (req: Request, res: Response) => {
-    let { username, password } = req.body;  //Check if username and password are set                             
-    if (!(username && password)) {res.status(400).send("Username or password are incorrect");}
     try {  //Get user from database
+    let { username, password } = req.body;  //Check if username and password are set                             
+    if (!(username && password)) {res.status(400).send("Username or password are incorrect!!!");}
     const userDB = await Pool.query(`select * from GetUserByName($1)`, [username]);
+    console.log(username);
+    if (!(userDB.rows[0])){res.status(400).send("User does not exist!!!");}
     const userData = userDB.rows[0];
     const newUser = new User(userData);
     //Check if encrypted password match
@@ -27,10 +29,9 @@ class controllerAuth {
     //Get ID and username from JWT
     const username = res.locals.jwtPayload.username;
     const id = res.locals.jwtPayload.userid;
-    //Get parameters from the body
-    const {oldPassword, newPassword} = req.body;
-    if (!(oldPassword && newPassword)) {res.status(400).send("Passwords don't match!!!");}
     try { //Get user from the database
+    const {oldPassword, newPassword} = req.body; //Get parameters from the body
+    if (!(oldPassword && newPassword)) {res.status(400).send("Passwords don't match!!!");}
     const userDB = await Pool.query(`select * from GetUserByName($1)`,[username]);
     const userData = userDB.rows[0];
     const newUser = new User(userData);
