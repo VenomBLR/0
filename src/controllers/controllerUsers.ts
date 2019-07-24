@@ -15,7 +15,7 @@ try {
 
 static getOneById = async (req: Request, res: Response) => {
   try {
-  //Get the ID from the url
+  //Get the ID from the url 
   const reqid: number = req.params.id;
   //Get ID and role from JWT
   const userid = res.locals.jwtPayload.userid;
