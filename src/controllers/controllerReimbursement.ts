@@ -56,7 +56,7 @@ class controllerReimbursement{
    
     static editReimbursement = async (req: Request, res: Response) => {
       try{
-      let { reimbursementid, author, amount, datesubmitted, dateResolved, description, resolver, statusid, typeid } = req.body;  //Get values from the body
+      let { reimbursementid, author, amount, datesubmitted, dateresolved, description, resolver, statusid, typeid } = req.body;  //Get values from the body
       let updateReimbursement = new Reimbursement(req.body);
       //Try to find reimbursement on database
       const reimbursementDB = await Pool.query(`select * from GetReimbursement($1)`, [updateReimbursement.reimbursementid]);
