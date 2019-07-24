@@ -7,11 +7,11 @@ import JWT from "../services/JWT";
 
 class controllerAuth {
   static login = async (req: Request, res: Response) => {
-    try {  //Get user from database
+  try {  
     let payload = req.body;  
     req.session.name = payload.username;                         
     if (!(payload.username && payload.password)) {res.status(400).send("Username or password are incorrect!!!");} //Check if username and password are set  
-    const userDB = await Pool.query(`select * from GetUserByName($1)`, [payload.username]);
+    const userDB = await Pool.query(`select * from GetUserByName($1)`, [payload.username]); //Get user from database
     if (!(userDB.rows[0])){res.status(400).send("User does not exist!!!");}
     const userData = userDB.rows[0];
     const newUser = new User(userData);
@@ -25,8 +25,8 @@ class controllerAuth {
     } catch (error) {res.status(401).send(`Error!!! ${error}`);};      
     } 
 
-    static changePassword = async (req: Request, res: Response) => {
-    try { 
+  static changePassword = async (req: Request, res: Response) => {
+  try { 
     //Get ID and username from JWT
     const username = res.locals.jwtPayload.username;
     const id = res.locals.jwtPayload.userid;

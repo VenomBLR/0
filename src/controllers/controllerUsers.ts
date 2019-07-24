@@ -14,7 +14,7 @@ try {
 };
 
 static getOneById = async (req: Request, res: Response) => {
-  try {
+try {
   //Get the ID from the url 
   const reqid: number = req.params.id;
   //Get ID and role from JWT
@@ -34,7 +34,7 @@ static getOneById = async (req: Request, res: Response) => {
 };
 
 static newUser = async (req: Request, res: Response) => {
-  try{ 
+try{ 
   //Get parameters from the body
   let { username, password, firstname, lastname, email, roleid } = req.body;
   const newUser = new User(req.body);
@@ -48,7 +48,7 @@ static newUser = async (req: Request, res: Response) => {
 };
 
 static editUser = async (req: Request, res: Response) => {
-  try{ 
+try{ 
   //Get values from the body
   let { userid, username, password, firstname, lastname, email, roleid } = req.body;
   if (!req.body.userid) {res.status(404).send("Userid not found!!!")};
