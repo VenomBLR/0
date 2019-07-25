@@ -28,17 +28,14 @@ class controllerReimbursement{
       const id = res.locals.jwtPayload.userid;
       //Get the user role from JWT
       const role = res.locals.jwtPayload.role;
-      if ((reqid == id) || (role == 'Manager')) {const reimbursement = await Pool.query(`select * from GetReimbursementById($1)`, [reqid]);
-      if (reimbursement.rows[0]) {
-      res.status(200).send(reimbursement.rows); 
-      } else {
-      res.status(404).send("User not found");
-      }
-      } else {
-      res.status(404).send("You are not authorized"); 
-      }
-     } catch (error) {res.status(401).send(`Error!!! ${error}`);}; 
-    };
+      if ((reqid == id) || (role == 'Manager')) {
+        const reimbursements = await Pool.query(`select * from GetReimbursementById($1)`, [reqid]);
+        if (!(reimbursements.rows[0])) {
+          res.status(404).send("Reimbursement not found!!!");
+      } else {res.status(200).send(reimbursements.rows);}
+    } else {res.status(404).send("You are not authorized!!!");}
+      } catch (error) {res.status(401).send(`Error!!! ${error}`);}; 
+    }
     
     static submitReimbursement = async (req: Request, res: Response) => {
        try{
