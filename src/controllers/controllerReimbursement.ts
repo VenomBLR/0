@@ -33,7 +33,7 @@ class controllerReimbursement{
         if (!(reimbursements.rows[0])) {
           res.status(404).send("Reimbursement not found!!!");
       } else {res.status(200).send(reimbursements.rows);}
-    } else {res.status(404).send("You are not authorized!!!");}
+    } else {res.status(404).send("You are not authorized for this operation!!!");}
       } catch (error) {res.status(401).send(`Error!!! ${error}`);}; 
     }
     
