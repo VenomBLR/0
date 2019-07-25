@@ -42,12 +42,13 @@ class controllerAuth {
       //Store hash in database
       Pool.query(`select * from SavePassById($1, $2)`, [passhash, id]);            
       });
-      res.status(201).send('Passwords match and were changed!!!');
       } else {
       res.status(401).send(`Passwords don't match!!!`); 
       }
       }
     );
+    const newToken = jwt.sign({userid: newUser.userid, username: newUser.username, role: newUser.role }, JWT.jwtSecret, {expiresIn: "2h"});
+    res.setHeader("auth", newToken); res.end('Passwords match and were changed!!!');
     }  catch (error) {res.status(401).send(`Error!!! ${error}`);};
 }
 }
