@@ -8,8 +8,7 @@ import JWT from "../services/JWT";
 class controllerAuth {
   static login = async (req: Request, res: Response) => {
   try {  
-    let payload = req.body;  
-    req.session.name = payload.username;                         
+    let payload = req.body;                        
     if (!(payload.username && payload.password)) {res.status(400).send("Username or password are incorrect!!!");} //Check if username and password are set  
     const userDB = await Pool.query(`select * from GetUserByName($1)`, [payload.username]); //Get user from database
     if (!(userDB.rows[0])){res.status(400).send("User does not exist!!!");}
@@ -23,7 +22,7 @@ class controllerAuth {
         res.end("Authentication Success!!!");} else {res.status(404).send("Authentication failed!!!");} 
     });   
     } catch (error) {res.status(401).send(`Error!!! ${error}`);};      
-    } 
+  } 
 
   static changePassword = async (req: Request, res: Response) => {
   try { 
