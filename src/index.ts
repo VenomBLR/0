@@ -17,9 +17,10 @@ process.on('SIGINT', () => {closePool(); port_handler.close(); });
 
 // Call midlewares
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({allowedHeaders:['Authorization']}));
 app.use(bodyParser.json());
 app.use(express.json());
 
 //Set all routes from routes folder
-app.use("/", routes);});
+app.use("/", routes);
+});
