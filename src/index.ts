@@ -17,6 +17,7 @@ process.on('SIGINT', () => {closePool(); port_handler.close(); });
 
 // Call midlewares
 app.use(cookieParser());
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
