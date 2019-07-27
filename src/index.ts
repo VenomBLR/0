@@ -1,7 +1,6 @@
 import express from "express"
 import bodyParser from "body-parser"
 import routes from "./routers/main";
-import cors from "cors";
 import cookieParser from "cookie-parser";
 import session from 'express-session';
 import { closePool } from "./services/serviceDb";
@@ -18,7 +17,6 @@ process.on('SIGINT', () => {closePool(); port_handler.close(); });
 
 // Call midlewares
 app.use(cookieParser());
-app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(session({
