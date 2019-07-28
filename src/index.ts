@@ -2,6 +2,7 @@ import express from "express"
 import bodyParser from "body-parser"
 import routes from "./routers/main";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import { closePool } from "./services/serviceDb";
 
 // Create a new express application instance
@@ -17,13 +18,9 @@ process.on('SIGINT', () => {closePool(); port_handler.close(); });
 
 // Call midlewares
 app.use(cookieParser());
+app.use(cors({origin: "http://localhost:3000", credentials: true, allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token", "Authorization"]}));
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    next();
-});
 
 //Set all routes from routes folder
 app.use("/", routes);
