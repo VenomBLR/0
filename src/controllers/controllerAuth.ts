@@ -18,7 +18,7 @@ class controllerAuth {
     bcrypt.compare(payload.password, newUser.password).then(function(match) {
     if(match) {
         const token = jwt.sign({userid: newUser.userid, username: payload.username, role: newUser.role }, JWT.jwtSecret, { expiresIn: "2h" } );
-        res.setHeader('Authorization', `${token}`); res.status(201).send(`${newUser.roleid}:${token}`);} else {res.status(401).send("Authentication failed!!!");} 
+        res.setHeader('Authorization', `${token}`); res.status(201).send(`${newUser.role}:${token}`);} else {res.status(401).send("Authentication failed!!!");} 
     });
     } catch (error) {res.status(401).send(`Error!!! ${error}`);};      
   } 
