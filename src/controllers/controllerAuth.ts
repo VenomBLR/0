@@ -18,7 +18,7 @@ class controllerAuth {
     bcrypt.compare(payload.password, newUser.password).then(function(match) {
     if(match) {
         const token = jwt.sign({userid: newUser.userid, username: payload.username, role: newUser.role }, JWT.jwtSecret, { expiresIn: "2h" } );
-        res.setHeader('Authorization', `${token}`); res.status(201).send('Authentication Ok!!!');} else {res.status(404).send("Authentication failed!!!");} 
+        res.setHeader('Authorization', `${token}`); res.status(201).send(`${token}`);} else {res.status(404).send("Authentication failed!!!");} 
     });
     } catch (error) {res.status(401).send(`Error!!! ${error}`);};      
   } 
@@ -47,7 +47,7 @@ class controllerAuth {
       }
     );
     const newToken = jwt.sign({userid: newUser.userid, username: newUser.username, role: newUser.role }, JWT.jwtSecret, {expiresIn: "2h"});
-    res.setHeader('Authorization', `${newToken}`); res.status(201).send('Password was changed!!!');
+    res.setHeader('Authorization', `${newToken}`); res.status(201).send(`${newToken}`);
     }  catch (error) {res.status(401).send(`Error!!! ${error}`);};
 }
 }
