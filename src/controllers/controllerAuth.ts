@@ -18,8 +18,8 @@ class controllerAuth {
     bcrypt.compare(payload.password, newUser.password).then(function(match) {
     if(match) {
         const token = jwt.sign({userid: newUser.userid, username: payload.username, role: newUser.role }, JWT.jwtSecret, { expiresIn: "2h" } );
-        res.setHeader('Authorization', `${token}`); res.header("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        res.setHeader('Authorization', `${token}`);
+        res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         res.setHeader("Access-Control-Max-Age", "3600");
