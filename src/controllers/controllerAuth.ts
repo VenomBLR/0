@@ -18,7 +18,10 @@ class controllerAuth {
     bcrypt.compare(payload.password, newUser.password).then(function(match) {
     if(match) {
         const token = jwt.sign({userid: newUser.userid, username: payload.username, role: newUser.role }, JWT.jwtSecret, { expiresIn: "2h" } );
-        res.setHeader('Authorization',`${token}`);} else {res.status(404).send("Authentication failed!!!");} 
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.writeHead(201, {'Authorization' : `${token}`}); res.end('Authentication Ok!!!');} else {res.status(404).send("Authentication failed!!!");} 
     });
     } catch (error) {res.status(401).send(`Error!!! ${error}`);};      
   } 
@@ -47,7 +50,10 @@ class controllerAuth {
       }
     );
     const newToken = jwt.sign({userid: newUser.userid, username: newUser.username, role: newUser.role }, JWT.jwtSecret, {expiresIn: "2h"});
-    res.setHeader('Authorization',`${newToken}`);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.writeHead(201, {'Authorization' : `${newToken}`}); res.end('Password was changed!!!');
     }  catch (error) {res.status(401).send(`Error!!! ${error}`);};
 }
 }
