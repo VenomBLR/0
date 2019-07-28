@@ -8,6 +8,13 @@ import { closePool } from "./services/serviceDb";
 // Create a new express application instance
 const app = express();
 const port = 5050;
+const corsOptions: cors.CorsOptions = {
+    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token", "Authorization"],
+    credentials: true,
+    methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+    origin: "*",
+    preflightContinue: false
+};
 
 // Open port
 const port_handler = app.listen(port, () => { console.log(`ERS running on port ${port}.`);
@@ -17,7 +24,7 @@ process.on('SIGINT', () => {closePool(); port_handler.close(); });
 
 // Call midlewares
 app.use(cookieParser());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
 
