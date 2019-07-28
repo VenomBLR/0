@@ -18,7 +18,10 @@ class controllerAuth {
     bcrypt.compare(payload.password, newUser.password).then(function(match) {
     if(match) {
         const token = jwt.sign({userid: newUser.userid, username: payload.username, role: newUser.role }, JWT.jwtSecret, { expiresIn: "2h" } );
-        res.setHeader('Authorization', `${token}`); res.status(201).send('Authentication Ok!!!');} else {res.status(404).send("Authentication failed!!!");} 
+        res.setHeader('Authorization', `${token}`); res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
+        res.header("Access-Control-Allow-Methods", "OPTIONS, PUT, POST, PATCH, DELETE, GET");
+        res.status(201).send('Authentication Ok!!!');} else {res.status(404).send("Authentication failed!!!");} 
     });
     } catch (error) {res.status(401).send(`Error!!! ${error}`);};      
   } 
