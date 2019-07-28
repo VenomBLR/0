@@ -19,6 +19,15 @@ process.on('SIGINT', () => {closePool(); port_handler.close(); });
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+    app.options('*', (req, res) => { 
+    res.header('Access-Control-Allow-Methods', 'GET, PATCH, PUT, POST, DELETE, OPTIONS');
+    res.send();
+    });
+});
 
 //Set all routes from routes folder
 app.use("/", routes);
