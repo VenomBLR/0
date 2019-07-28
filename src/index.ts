@@ -18,7 +18,7 @@ process.on('SIGINT', () => {closePool(); port_handler.close(); });
 
 // Call midlewares
 app.use(cookieParser());
-app.use(cors({origin: "http://localhost:3000", credentials: true, allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token", "Authorization"]}));
+app.use(cors({origin: "http://localhost:3000", credentials: true, allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "X-Access-Token", "Authorization", "auth"]}));
 app.use(bodyParser.json());
 app.use(express.json());
 
