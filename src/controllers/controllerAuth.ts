@@ -19,7 +19,7 @@ class controllerAuth {
     if(match) {
         const token = jwt.sign({userid: newUser.userid, username: payload.username, role: newUser.role }, JWT.jwtSecret, { expiresIn: "2h" } );
         res.header("Access-Control-Allow-Origin", "*");
-        res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+        res.header('Access-Control-Allow-Methods', 'OPTIONS, DELETE, PUT, GET, POST');
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.header('Authorization', `${token}`); res.status(201).send('Authentication Ok!!!');} else {res.status(404).send("Authentication failed!!!");} 
     });
