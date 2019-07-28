@@ -19,10 +19,7 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   //We want to send a new token on every request
   const { userid, username, role } = jwtPayload;
   const newToken = jwt.sign({ userid, username, role }, JWT.jwtSecret, {expiresIn: "2h"});
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header('Authorization' , `${newToken}`);
+  res.setHeader('Authorization' , `${newToken}`);
   //Call the next middleware or controller
   next();
 };
