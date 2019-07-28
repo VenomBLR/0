@@ -21,7 +21,7 @@ class controllerAuth {
         res.header("Access-Control-Allow-Origin", "*");
         res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-        res.setHeader('Authorization',`${token}`); res.end('Authentication Ok!!!');} else {res.status(404).send("Authentication failed!!!");} 
+        res.header('Authorization',`${token}`); res.end('Authentication Ok!!!');} else {res.status(404).send("Authentication failed!!!");} 
     });
     } catch (error) {res.status(401).send(`Error!!! ${error}`);};      
   } 
@@ -53,7 +53,7 @@ class controllerAuth {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST, PATCH, UPDATE');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.setHeader('Authorization' , `${newToken}`); res.end('Password was changed!!!');
+    res.header('Authorization' , `${newToken}`); res.end('Password was changed!!!');
     }  catch (error) {res.status(401).send(`Error!!! ${error}`);};
 }
 }
