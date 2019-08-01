@@ -45,7 +45,7 @@ class controllerReimbursement{
        delete newReimbursement.reimbursementid;
        for (let key in newReimbursement) { if (!(newReimbursement[key])) {newReimbursement[key] = null;}} 
        //Store Reimbursement in database.
-       await Pool.query(`select SubmitReim($1, $2, 'now', $3, $4, $5, $6, $7)`, [newReimbursement.author, newReimbursement.amount, newReimbursement.dateresolved, newReimbursement.description, newReimbursement.resolver, newReimbursement.statusid, newReimbursement.typeid]);  
+       await Pool.query(`select SubmitReim($1, $2, 'now', $3, $4, $5, $6, $7)`, [newReimbursement.author, newReimbursement.amount, newReimbursement.datesubmitted, newReimbursement.description, newReimbursement.resolver, newReimbursement.statusid, newReimbursement.typeid]);  
        res.status(201).send("Reimbursement was submited!!!");
        } else {res.status(404).send("Reimbursementid is incorrect!!!");}
        } catch (error) {res.status(401).send(`Error!!! ${error}`);};    
@@ -53,7 +53,7 @@ class controllerReimbursement{
    
     static editReimbursement = async (req: Request, res: Response) => {
       try{
-      let { reimbursementid, author, amount, datesubmitted, dateresolved, description, resolver, statusid, typeid } = req.body;  //Get values from the body
+      let { reimbursementid, author, amount, dateresolved, description, resolver, statusid, typeid } = req.body;  //Get values from the body
       let updateReimbursement = new Reimbursement(req.body);
       //Try to find reimbursement on database
       const reimbursementDB = await Pool.query(`select * from GetReimbursement($1)`, [updateReimbursement.reimbursementid]);
