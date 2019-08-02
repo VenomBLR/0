@@ -39,7 +39,7 @@ class controllerReimbursement{
     
     static submitReimbursement = async (req: Request, res: Response) => {
        try{
-       let { reimbursementid, author, amount, datesubmitted, description, resolver, statusid, typeid } = req.body; //Get parameters from the body
+       let { reimbursementid, author, amount, description, resolver, statusid, typeid } = req.body; //Get parameters from the body
        if (!(reimbursementid)) { 
        const newReimbursement = new Reimbursement(req.body);
        delete newReimbursement.reimbursementid;
