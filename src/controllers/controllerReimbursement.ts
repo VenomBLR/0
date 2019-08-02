@@ -39,10 +39,11 @@ class controllerReimbursement{
     
     static submitReimbursement = async (req: Request, res: Response) => {
        try{
-       let { reimbursementid, author, amount, datesubmitted, dateresolved, description, resolver, statusid, typeid } = req.body; //Get parameters from the body
+       let { reimbursementid, author, amount, datesubmitted, description, resolver, statusid, typeid } = req.body; //Get parameters from the body
        if (!(reimbursementid)) { 
        const newReimbursement = new Reimbursement(req.body);
        delete newReimbursement.reimbursementid;
+       delete newReimbursement.dateresolved;
        for (let key in newReimbursement) { if (!(newReimbursement[key])) {newReimbursement[key] = null;}} 
        //Store Reimbursement in database.
        await Pool.query(`select SubmitReim($1, $2, 'now', $4, $5, $6, $7)`, [newReimbursement.author, newReimbursement.amount, newReimbursement.datesubmitted, newReimbursement.description, newReimbursement.resolver, newReimbursement.statusid, newReimbursement.typeid]);  
