@@ -46,7 +46,7 @@ class controllerReimbursement{
        delete newReimbursement.dateresolved;
        for (let key in newReimbursement) { if (!(newReimbursement[key])) {newReimbursement[key] = null;}} 
        //Store Reimbursement in database.
-       await Pool.query(`select SubmitReim($1, $2, 'now', $4, $5, $6, $7)`, [newReimbursement.author, newReimbursement.amount, newReimbursement.description, newReimbursement.resolver, newReimbursement.statusid, newReimbursement.typeid]);  
+       await Pool.query(`select SubmitReim($1, $2, 'now', $3, $4, $5, $6)`, [newReimbursement.author, newReimbursement.amount, newReimbursement.description, newReimbursement.resolver, newReimbursement.statusid, newReimbursement.typeid]);  
        res.status(201).send("Reimbursement was submited!!!");
        } else {res.status(404).send("Reimbursementid is incorrect!!!");}
        } catch (error) {res.status(401).send(`Error!!! ${error}`);};    
