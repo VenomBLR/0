@@ -62,7 +62,7 @@ class controllerReimbursement{
       if (updateReimbursement.reimbursementid) {
        for (let key in updateReimbursement) { if (!(updateReimbursement[key])) {updateReimbursement[key] = null;}} 
         for (let key in newReimbursement) { if (!(updateReimbursement[key])) {newReimbursement[key] = newReimbursement[key];} else {newReimbursement[key] = updateReimbursement[key]}};
-         await Pool.query(`select EditReimById($1, $2, $3, 'now', $5, $6, $7, $8, $9)`, [newReimbursement.author, newReimbursement.amount, newReimbursement.datesubmitted, newReimbursement.description, newReimbursement.resolver, newReimbursement.statusid, newReimbursement.typeid, reimbursementid]);
+         await Pool.query(`select EditReimById($1, $2, $3, 'now', $4, $5, $6, $7, $8)`, [newReimbursement.author, newReimbursement.amount, newReimbursement.datesubmitted, newReimbursement.description, newReimbursement.resolver, newReimbursement.statusid, newReimbursement.typeid, reimbursementid]);
            res.status(200).send("Reimbursement was changed!!!" );
         } else {res.status(404).send("Reimbursement not found!!!");}
       } catch (error) {res.status(401).send(`Error!!! ${error}`);};    
