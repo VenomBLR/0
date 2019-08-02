@@ -12,7 +12,7 @@ import { checkRole } from "../services/chkRole";
   router.get("/reimbursements/author/:id([0-9]+)", [checkJwt, checkRole(["Manager", "Employee"])], controllerReimbursement.getOneById);
 
   //Submit reimbursement
-  router.post("/reimbursements", [checkJwt, checkRole(["Manager"])], controllerReimbursement.submitReimbursement);
+  router.post("/reimbursements", [checkJwt, checkRole(["Admin", "Manager", "Employee"])], controllerReimbursement.submitReimbursement);
 
   //Edit reimbursement
   router.patch("/reimbursements", [checkJwt, checkRole(["Manager"])], controllerReimbursement.editReimbursement);
