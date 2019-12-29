@@ -10,7 +10,6 @@ const app = express();
 const port = 5050;
 
 // Open port
-
 const port_handler = app.listen(port, () => { console.log(`ERS running on port ${port}.`);
 
 // Close the pool when app shuts down
